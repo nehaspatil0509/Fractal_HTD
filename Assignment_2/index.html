@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+.content
+{
+    margin-bottom: 15px;
+} 
+.data{
+    width: 100%; padding: 8px;
+}   
+</style>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My first Website</title>
+</head>
+
+<body>
+    <div>
+        <div style="border: 1px solid black; display: flex; align-items:center;" width="100%" height="100%"
+            cellspacing="0" cellpadding="10">
+            <div style="flex: 0 0 auto; padding: 10px;">
+                <img src="./img/logo.webp" height="70px" width="70px" alt="Logo">
+            </div>
+            <div style="flex-grow: 1; text-align: center;">
+                <h1 style="text-align: center;">My First Website</h1>
+            </div>
+
+            <div style="text-align: right;padding: 10px;">
+                <a href="index.html">Home</a> |
+                <a href="contact.html">Contact</a> |
+                <a href="about.html">About</a>
+            </div>
+
+        </div>
+        <div>
+            <div style="border: 1px solid black; display: flex; align-items:center;" width="100%" height="100%"
+                cellspacing="0" cellpadding="10">
+
+                <div style=" padding: 10px; width: 10%; height: 350px; border-right: 1px solid black;">
+                    <p><b>Navigation</b></p>
+                    <ul>
+                        <li>Link 1</li>
+                        <li>Link 2</li>
+                        <li>Link 3</li>
+                    </ul>
+
+                </div>
+                
+                <div style="width: 400px; margin: 50px auto; padding: 20px; border-radius: 10px;  text-align: left;">
+                  <form>
+                    <h1 style=" margin-bottom: 20px; color: #333;">User Registration form</h1>
+
+                    <div class="content">
+                        <label for="name" class="data">Name:</label>
+                        <input type="text" name="name" id="user_name" placeholder="Name" required>
+                    </div>
+                    <div class="content">
+                        <label for="email" class="data">Email:</label>
+                        <input type="email" name="email" id="email" placeholder="Email" required>
+                    </div>
+                    <div class="content">
+                        <label for="password" class="data";>PWD:</label>
+                        <input type="password" name="password" id="password" placeholder="Password" required>
+                    </div>
+                    <div class="content">
+                        <label for="mobile" class="data">Mobile:</label>
+                        <input type="text" name="mobile" id="mobile" placeholder="Mobile Number" maxlength="10">
+                    </div>
+                    <div>
+                        <button align="center" type="submit">Submit</button>
+                        <button  type="reset">Clear</button>
+                    </div>
+                </div>
+            </div>
+            <div style="border: 1px solid black; display: flex; align-items:center;" width="100%" height="100%"
+            cellspacing="0" cellpadding="10">
+            <div style="flex: 0 0 auto; padding: 10px;">
+               <p>This website is for Fractal Analytics</p>
+            </div>
+            <div style="flex-grow: 1; text-align: center;">
+                <p style="text-align: center;">© 2023 Fractal Analytics</p>
+            </div>
+
+            <div style="text-align: right;padding: 10px;">
+                <a href="index.html">Home</a> |
+                <a href="contact.html">Contact</a> |
+                <a href="about.html">About</a>
+            </div>
+        </form>
+        </div>
+        </div>
+
+</body>
+
+</html>
