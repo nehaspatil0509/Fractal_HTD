@@ -1,0 +1,41 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+    <meta charset="utf-8">
+    <title>Page Title - My Site</title> <!-- TODO: update page title -->
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+    <div class="container" id="main-content">
+        <div class="main-content">
+        <h1>calculator</h1>
+        <div class="form-group">
+            <label for="number_1">fisrt Number:</label>
+            <input type="number" id="number_1" name="number_1" required>
+        </div>
+
+        <div class="form-group">
+            <label for="number_2">second Number:</label>
+            <input style="padding-left: 10px;" type="number" id="number_2" name="number_2" required>
+
+        </div>
+
+        <div>
+            <input type="button" id="add" value="add" onclick="arithmaticoperation('add')">
+            <input type="button" id="sub" value="sub" onclick="arithmaticoperation('sub')">
+            <input type="button" id="mul" value="mul" onclick="arithmaticoperation('mul')">
+        </div>
+        <br>
+        <div id="result" class="result"></div>
+        </div>
+    </div>
+    </body>
+
+    <script src="first.js"></script>
+</body>
+
+</html>

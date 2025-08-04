@@ -1,0 +1,29 @@
+.container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f4f4f4;
+    border-radius: 8px;
+    
+
+}
+.main-content {
+    text-align: center;
+}
+
+.form-group {
+
+    margin: 30px;
+    border-radius: 4px;
+}
+
+.result {
+    height: 30px;
+    width: 300px;
+    border: 1px solid black;
+    text-align: center;
+    line-height: 30px;    
+    margin: 10px auto;    
+    font-weight: bold;
+    justify-content: center;   
+}
