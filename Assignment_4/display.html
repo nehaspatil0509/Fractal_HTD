@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  
+  <title>Submitted Data</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+  <h2>Submitted Contact Details</h2>
+  <p><strong>Name:</strong> <span id="name"></span></p>
+  <p><strong>Email:</strong> <span id="email"></span></p>
+  <p><strong>Mobile:</strong> <span id="mobile"></span></p>
+  <p><strong>Reason:</strong> <span id="reason"></span></p>
+  <p><strong>Message:</strong> <span id="message"></span></p>
+ </div>
+  <script>
+  const formData = JSON.parse(localStorage.getItem("contactForm"));
+  if (formData) {
+    document.getElementById("name").textContent = formData.userName;
+    document.getElementById("email").textContent = formData.userEmail;
+    document.getElementById("mobile").textContent = formData.userMobile;
+    document.getElementById("reason").textContent = formData.userReason;
+    document.getElementById("message").textContent = formData.userMessage;
+  } else {
+    document.body.innerHTML = "<p>No data found. Please fill the form first.</p>";
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+  
+</style>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div>
+        <div class="nav-content" >
+            <div style="flex: 0 0 auto; padding: 10px;">
+                <img src="./img/logo.webp" height="70px" width="70px" alt="Logo">
+            </div>
+            <div style="flex-grow: 1; text-align: center;">
+                <h1 style="text-align: center;">Contact Us</h1>
+            </div>
+
+            <div style="text-align: right;padding: 10px;">
+                <a href="home.html">Home</a> |
+                <a href="contact.html">Contact</a> |
+                <a href="about.html">About</a>
+            </div>
+
+        </div>
+        <div>
+            <div class="form-container">
+                
+                <div style="width: 400px; margin: 50px auto; padding: 20px; border-radius: 10px;  text-align: left;">
+                  <form id="contact_form" onsubmit="storeFormData(event) ">
+                    <h3 style=" margin-bottom: 20px; color: #333;">Contact us form</h3>
+
+                    <div class="content">
+                        <label for="name" class="data">Name:</label>
+                        <input type="text" name="name" id="user_name" placeholder="Name" required>
+                    </div>
+                    <div class="content">
+                        <label for="email" class="data">Email:</label>
+                        <input type="email" name="email" id="email" placeholder="Email" required>
+                    </div>
+                    
+                    <div class="content">
+                        <label for="mobile" class="data">Mobile:</label>
+                        <input type="text" name="mobile" id="mobile" placeholder="Mobile Number" maxlength="10">
+                    </div>
+                    <div class="content">
+                        <label for="reason" class="data">Reason of contacting:</label>
+                          <select name="reason" id="reason" required>
+                            <option value="" disabled selected>Select a reason</option>
+                            <option value="feedback">Feedback</option>
+                            <option value="inquiry">Inquiry</option>
+                            <option value="support">Support</option>
+                            <option value="other">Other</option>  
+                            </select>
+                        <!-- <input type="text" name="mobile" id="mobile" placeholder="Mobile Number" maxlength="10"> -->
+                    </div>
+                    <div class="content">
+                        <label for="messege" class="data";>Massege:</label>
+                        <textarea name="messege" id="messege" placeholder="messege" required></textarea>
+                    </div>
+                    <div>
+                        <button align="center" type="submit" id="submit_button" >Submit</button>
+                        <button  type="reset">Clear</button>
+                    </div>
+                </div>
+            </div>
+            <div class="form-container">
+            <div style="flex: 0 0 auto; padding: 10px;">
+               <p>This website is for Fractal Analytics</p>
+            </div>
+            <div style="flex-grow: 1; text-align: center;">
+                <p style="text-align: center;">© 2023 Fractal Analytics</p>
+            </div>
+
+            <div style="text-align: right;padding: 10px;">
+                <a href="home.html">Home</a> |
+                <a href="contact.html">Contact</a> |
+                <a href="about.html">About</a>
+            </div>
+        </form>
+        </div>
+        </div>
+        <script src="index.js"></script>
+</body>
+
+</html>
