@@ -1,0 +1,25 @@
+.container {
+    text-align: center;
+    padding: 30px;
+}
+
+.image-container {
+    display: flex;
+    align-items: center;     /* vertically center buttons and image */
+    justify-content: center; /* horizontally center the whole row */
+    gap: 20px;                /* space between items */
+    padding: 20px;
+}
+
+#image_display {
+    width: 700px;
+    height: 300px;
+    object-fit: cover;
+    border: 2px solid #ccc;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
