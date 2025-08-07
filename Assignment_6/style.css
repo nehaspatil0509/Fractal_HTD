@@ -1,0 +1,93 @@
+.container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+}
+
+.main-content {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.bottom-content {
+    overflow: hidden;
+    background-color: #e9ecef;
+    padding: 20px;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+
+.button {
+    padding: 10px 20px;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+/* #taskList button {
+    float: left;
+    margin: 10px;
+    border: 1px solid #ccc;
+    color: red;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    border-radius: 5px;
+    
+}
+
+.task-done {
+   float: right;
+  color: green;
+  font-weight: bold;
+} */
+#taskList {
+  counter-reset: task-counter;
+  list-style: none;
+  padding-left: 0;
+}
+
+#taskList li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 10px 0;
+  padding: 10px 15px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+}
+
+#taskList li::before {
+  counter-increment: task-counter;
+  content: counter(task-counter) ".";
+  font-weight: bold;
+  color: black;
+  margin-right: 5px;
+}
+
+.task-text {
+  margin-right: 10px;
+}
+
+/* Button styles */
+#taskList button {
+  padding: 6px 12px;
+  margin-right: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: #f5f5f5;
+  color: red;
+}
+
+#taskList .done-button {
+  color: green;
+}
+
+.task-done {
+  color: green;
+  font-weight: bold;
+}

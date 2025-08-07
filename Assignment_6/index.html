@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Task Manager</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <div class="container">
+    <div class="main-content">
+      <h1>Add Task</h1>
+      <label for="taskInput">Task:</label>
+      <input type="text" id="taskInput" name="task" placeholder="Enter your task here" required />
+      <div class="button">
+        <button id="clickMe" onclick="addtask()">Add</button>
+      </div>
+    </div>
+
+    <div class="bottom-content">
+      <h2>Submitted Task Name:</h2>
+      <ol id="taskList" style="margin: 10px 0;"></ol>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
