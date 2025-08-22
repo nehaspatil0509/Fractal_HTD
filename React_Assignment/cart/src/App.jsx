@@ -1,5 +1,6 @@
 import React from 'react';
 import Fruits from './components/Fruits';
+import Api from './components/Api';
 
 function App() {
   return (
@@ -8,6 +9,7 @@ function App() {
         <h1 className="mb-3">Shopping Cart</h1>
         <p className="lead mb-4">Manage your items below:</p>
         <Fruits />
+        <Api />
       </div>
     </div>
   );
