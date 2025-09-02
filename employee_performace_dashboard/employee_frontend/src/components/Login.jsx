@@ -1,19 +1,33 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Form, Button, Card, Container, Row, Col, Alert } from "react-bootstrap";
+import {
+  Form,
+  Button,
+  Card,
+  Container,
+  Row,
+  Col,
+  Alert,
+} from "react-bootstrap";
+import RegistrationForm from "./RegistrationForm";
 
 function LoginPage({ onLogin }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [isRegistering, setIsRegistering] = useState(false);
 
+  // 🔹 Handle login
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://127.0.0.1:8000/api/accounts/login/", {
-        username,
-        password,
-      });
+      const response = await axios.post(
+        "http://127.0.0.1:8000/api/accounts/login/",
+        {
+          username,
+          password,
+        }
+      );
 
       localStorage.setItem("access", response.data.access);
       localStorage.setItem("refresh", response.data.refresh);
@@ -25,42 +39,79 @@ function LoginPage({ onLogin }) {
   };
 
   return (
-    <Container fluid className="vh-100 d-flex justify-content-center align-items-center bg-light">
+    <Container
+      fluid
+      className="vh-100 d-flex justify-content-center align-items-center bg-light"
+    >
       <Row className="w-100">
         <Col md={{ span: 4, offset: 4 }}>
           <Card className="shadow-lg border-0 rounded-4">
             <Card.Body>
-              <h3 className="text-center mb-4">Employee Dashboard Login</h3>
+              <h3 className="text-center mb-4">
+                {isRegistering
+                  ? "Create a New Account"
+                  : "Employee Dashboard Login"}
+              </h3>
 
-              {error && <Alert variant="danger">{error}</Alert>}
+              {error && !isRegistering && (
+                <Alert variant="danger">{error}</Alert>
+              )}
 
-              <Form onSubmit={handleLogin}>
-                <Form.Group className="mb-3">
-                  <Form.Label>Username</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Enter username"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    required
-                  />
-                </Form.Group>
+              {/* 🔹 Show RegistrationForm OR LoginForm */}
+              {isRegistering ? (
+                <>
+                  <RegistrationForm onRegister={() => setIsRegistering(false)} />
+                  <Button
+                    variant="secondary"
+                    className="w-100 mt-3"
+                    onClick={() => setIsRegistering(false)}
+                  >
+                    Back to Login
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Form onSubmit={handleLogin}>
+                    <Form.Group className="mb-3">
+                      <Form.Label>Username</Form.Label>
+                      <Form.Control
+                        type="text"
+                        placeholder="Enter username"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                        required
+                      />
+                    </Form.Group>
 
-                <Form.Group className="mb-4">
-                  <Form.Label>Password</Form.Label>
-                  <Form.Control
-                    type="password"
-                    placeholder="Enter password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                  />
-                </Form.Group>
+                    <Form.Group className="mb-4">
+                      <Form.Label>Password</Form.Label>
+                      <Form.Control
+                        type="password"
+                        placeholder="Enter password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                      />
+                    </Form.Group>
 
-                <Button type="submit" variant="primary" className="w-100 py-2 fw-bold">
-                  Login
-                </Button>
-              </Form>
+                    <Button
+                      type="submit"
+                      variant="primary"
+                      className="w-100 py-2 fw-bold"
+                    >
+                      Login
+                    </Button>
+                  </Form>
+
+                  <Button
+                    variant="outline-success"
+                    className="w-100 mt-3"
+                    onClick={() => setIsRegistering(true)}
+                  >
+                    New User? Register Here
+                  </Button>
+                </>
+              )}
 
               <p className="text-center text-muted mt-4 small">
                 © {new Date().getFullYear()} Employee Performance Dashboard

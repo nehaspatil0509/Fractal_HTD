@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import { Button, Table } from "react-bootstrap";
+import { Button, Table, Modal } from "react-bootstrap";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import KpiCards from "./components/KpiCards";
@@ -10,7 +10,40 @@ import AvgRatingChart from "./components/AverageRatechart";
 import DepartmentChart from "./components/Departmentchart";
 import LoginPage from "./components/Login";
 import PerformanceForm from "./components/PerformanceForm";
+import EmployeeImport from "./components/EmployeeImport";
+import TopEmployeesChart from "./components/TopEmployeesChart";
 import axios from "axios";
+
+// Employee Import Modal
+function EmployeeImportModal() {
+  const [show, setShow] = useState(false);
+
+  return (
+    <>
+      <Button variant="success" className="mb-3" onClick={() => setShow(true)}>
+        Import Employees
+      </Button>
+      <Modal show={show} onHide={() => setShow(false)} size="lg">
+        <Modal.Header closeButton>
+          <Modal.Title>Import Employees</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <EmployeeImport />
+        </Modal.Body>
+      </Modal>
+    </>
+  );
+}
+
+// Employees Page
+function EmployeesPage() {
+  return (
+    <div className="container my-4">
+      <EmployeeImportModal />
+      <EmployeesTable />
+    </div>
+  );
+}
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(!!localStorage.getItem("access"));
@@ -46,67 +79,51 @@ function App() {
     setShowPerformanceForm(true);
   };
 
-  const PrivateRoute = ({ children }) => {
-    return isAuthenticated ? children : <Navigate to="/login" replace />;
-  };
+  const PrivateRoute = ({ children }) => (isAuthenticated ? children : <Navigate to="/login" replace />);
 
   return (
     <Router>
       {isAuthenticated && <Header onLogout={handleLogout} />}
-
       <Routes>
+        {/* Login */}
         <Route
           path="/login"
-          element={
-            isAuthenticated ? <Navigate to="/" replace /> : <LoginPage onLogin={handleLogin} />
-          }
+          element={isAuthenticated ? <Navigate to="/" replace /> : <LoginPage onLogin={handleLogin} />}
         />
 
-        {/* Home Page */}
+        {/* Home */}
         <Route
           path="/"
           element={
             <PrivateRoute>
               <div className="container my-4 flex-grow-1">
+                <div className="row mb-4"><div className="col-12"><KpiCards /></div></div>
                 <div className="row mb-4">
-                  <div className="col-12">
-                    <KpiCards />
-                  </div>
+                  <div className="col-md-6"><TopEmployeesChart /></div>
+                  <div className="col-md-6"><DepartmentChart /></div>
+                  
                 </div>
                 <div className="row mb-4">
-                  <div className="col-md-6">
-                    <TasksChart />
-                  </div>
-                  <div className="col-md-6">
-                    <AvgRatingChart />
-                  </div>
-                </div>
-                <div className="row mb-4">
-                  <div className="col-md-6">
-                    <EmployeesTable />
-                  </div>
-                  <div className="col-md-6">
-                    <DepartmentChart />
-                  </div>
+                  <div className="col-md-6"><TasksChart /></div>
+                  <div className="col-md-6"><AvgRatingChart /></div>
+                  
                 </div>
               </div>
             </PrivateRoute>
           }
         />
 
-        {/* Employees Page */}
+        {/* Employees */}
         <Route
           path="/employees"
           element={
             <PrivateRoute>
-              <div className="container my-4">
-                <EmployeesTable />
-              </div>
+              <EmployeesPage />
             </PrivateRoute>
           }
         />
 
-        {/* Performance / Reports Page */}
+        {/* Performance / Reports */}
         <Route
           path="/reports"
           element={
@@ -114,7 +131,12 @@ function App() {
               <div className="container my-4">
                 <div className="d-flex justify-content-between align-items-center mb-3">
                   <h4>Performance Reports</h4>
-                  <Button onClick={() => { setEditingData(null); setShowPerformanceForm(true); }}>
+                  <Button
+                    onClick={() => {
+                      setEditingData(null);
+                      setShowPerformanceForm(true);
+                    }}
+                  >
                     Add Performance
                   </Button>
                 </div>
@@ -137,11 +159,7 @@ function App() {
                         <td>{perf.pending_tasks}</td>
                         <td>{perf.rating}</td>
                         <td>
-                          <Button
-                            variant="warning"
-                            size="sm"
-                            onClick={() => openEditModal(perf)}
-                          >
+                          <Button variant="warning" size="sm" onClick={() => openEditModal(perf)}>
                             Edit
                           </Button>
                         </td>
@@ -152,7 +170,10 @@ function App() {
 
                 <PerformanceForm
                   show={showPerformanceForm}
-                  handleClose={() => { setShowPerformanceForm(false); fetchPerformances(); }}
+                  handleClose={() => {
+                    setShowPerformanceForm(false);
+                    fetchPerformances();
+                  }}
                   initialData={editingData}
                 />
               </div>
@@ -160,9 +181,9 @@ function App() {
           }
         />
 
+        {/* Catch-all */}
         <Route path="*" element={<Navigate to={isAuthenticated ? "/" : "/login"} replace />} />
       </Routes>
-
       {isAuthenticated && <Footer />}
     </Router>
   );

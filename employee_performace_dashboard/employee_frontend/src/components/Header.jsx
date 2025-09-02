@@ -19,7 +19,7 @@ function Header({ onLogout }) {
           <Nav className="ms-auto">
             <Nav.Link as={Link} to="/">Home</Nav.Link>
             <Nav.Link as={Link} to="/reports">Performance</Nav.Link>
-            <Nav.Link as={Link} to="/employees">Attendance</Nav.Link>
+            <Nav.Link as={Link} to="/employees">Employees</Nav.Link>
             <Nav.Link onClick={handleLogout} style={{ cursor: "pointer" }}>
               Logout
             </Nav.Link>

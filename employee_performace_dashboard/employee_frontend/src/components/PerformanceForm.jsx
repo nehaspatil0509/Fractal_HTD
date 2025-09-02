@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import axios from "axios";
 
-function PerformanceForm({ show, handleClose, initialData = null }) {
+function PerformanceForm({ show, handleClose, initialData = null, onSaved }) {
   const [employees, setEmployees] = useState([]);
   const [loading, setLoading] = useState(true);
   const [formData, setFormData] = useState({
@@ -21,7 +21,20 @@ function PerformanceForm({ show, handleClose, initialData = null }) {
         const res = await axios.get("http://127.0.0.1:8000/api/employees/", {
           headers: { Authorization: `Bearer ${token}` },
         });
-        setEmployees(Array.isArray(res.data) ? res.data : []);
+        const empList = Array.isArray(res.data) ? res.data : [];
+        setEmployees(empList);
+
+        // Prefill form only after employees loaded
+        if (initialData) {
+          setFormData({
+            employee: initialData.employee.id || initialData.employee,
+            completed_tasks: initialData.completed_tasks,
+            pending_tasks: initialData.pending_tasks,
+            rating: initialData.rating,
+          });
+        } else {
+          setFormData({ employee: "", completed_tasks: "", pending_tasks: "", rating: "" });
+        }
       } catch (err) {
         console.error("Error fetching employees:", err);
         setEmployees([]);
@@ -31,18 +44,6 @@ function PerformanceForm({ show, handleClose, initialData = null }) {
     };
 
     fetchEmployees();
-
-    // If editing, prefill the form
-    if (initialData) {
-      setFormData({
-        employee: initialData.employee,
-        completed_tasks: initialData.completed_tasks,
-        pending_tasks: initialData.pending_tasks,
-        rating: initialData.rating,
-      });
-    } else {
-      setFormData({ employee: "", completed_tasks: "", pending_tasks: "", rating: "" });
-    }
   }, [show, initialData]);
 
   const handleChange = (e) => {
@@ -55,7 +56,6 @@ function PerformanceForm({ show, handleClose, initialData = null }) {
 
     try {
       if (initialData && initialData.id) {
-        // Edit existing performance
         await axios.put(
           `http://127.0.0.1:8000/api/performance/${initialData.id}/`,
           formData,
@@ -63,7 +63,6 @@ function PerformanceForm({ show, handleClose, initialData = null }) {
         );
         alert("Performance updated successfully!");
       } else {
-        // Add new performance
         await axios.post(
           "http://127.0.0.1:8000/api/performance/",
           formData,
@@ -71,10 +70,11 @@ function PerformanceForm({ show, handleClose, initialData = null }) {
         );
         alert("Performance added successfully!");
       }
+      onSaved?.();
       handleClose();
     } catch (err) {
       console.error(err);
-      alert("Error while saving performance.");
+      alert("Error saving performance.");
     }
   };
 

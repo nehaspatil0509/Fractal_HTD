@@ -43,8 +43,8 @@ function AvgRatingChart() {
     <Card className="mb-4 shadow-sm">
       <Card.Body>
         <div className="d-flex justify-content-between align-items-center mb-3">
-          <Card.Title>Avg Rating</Card.Title>
-          <Button variant="outline-secondary" size="sm">Filter</Button>
+          {/* <Card.Title>Avg Rating</Card.Title> */}
+          {/* <Button variant="outline-secondary" size="sm">Filter</Button> */}
         </div>
         <HighchartsReact highcharts={Highcharts} options={options} />
       </Card.Body>
