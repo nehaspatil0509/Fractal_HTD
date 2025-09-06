@@ -1,14 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import {
-  Form,
-  Button,
-  Card,
-  Container,
-  Row,
-  Col,
-  Alert,
-} from "react-bootstrap";
+import { Form, Button, Card, Container, Row, Col, Alert } from "react-bootstrap";
 import RegistrationForm from "./RegistrationForm";
 
 function LoginPage({ onLogin }) {
@@ -20,19 +12,20 @@ function LoginPage({ onLogin }) {
   // 🔹 Handle login
   const handleLogin = async (e) => {
     e.preventDefault();
+    setError("");
     try {
       const response = await axios.post(
         "http://127.0.0.1:8000/api/accounts/login/",
-        {
-          username,
-          password,
-        }
+        { username, password }
       );
 
+      // Store tokens and role
       localStorage.setItem("access", response.data.access);
       localStorage.setItem("refresh", response.data.refresh);
+      localStorage.setItem("role", response.data.role);
+      localStorage.setItem("user_id", response.data.user_id);
 
-      if (onLogin) onLogin(); // Update App state
+      if (onLogin) onLogin();
     } catch (err) {
       setError("Invalid username or password");
     }
@@ -48,16 +41,12 @@ function LoginPage({ onLogin }) {
           <Card className="shadow-lg border-0 rounded-4">
             <Card.Body>
               <h3 className="text-center mb-4">
-                {isRegistering
-                  ? "Create a New Account"
-                  : "Employee Dashboard Login"}
+                {isRegistering ? "Create a New Account" : "Employee Dashboard Login"}
               </h3>
 
-              {error && !isRegistering && (
-                <Alert variant="danger">{error}</Alert>
-              )}
+              {error && !isRegistering && <Alert variant="danger">{error}</Alert>}
 
-              {/* 🔹 Show RegistrationForm OR LoginForm */}
+              {/* Toggle between Login and Registration */}
               {isRegistering ? (
                 <>
                   <RegistrationForm onRegister={() => setIsRegistering(false)} />
@@ -94,11 +83,7 @@ function LoginPage({ onLogin }) {
                       />
                     </Form.Group>
 
-                    <Button
-                      type="submit"
-                      variant="primary"
-                      className="w-100 py-2 fw-bold"
-                    >
+                    <Button type="submit" variant="primary" className="w-100 py-2 fw-bold">
                       Login
                     </Button>
                   </Form>

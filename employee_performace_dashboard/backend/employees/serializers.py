@@ -1,19 +1,27 @@
 from rest_framework import serializers
 from .models import Employee, EmployeeImportHistory
 
-# Existing serializer
+# Employee Serializer
 class EmployeeSerializer(serializers.ModelSerializer):
-    created_by = serializers.ReadOnlyField(source='created_by.username')
+    username = serializers.ReadOnlyField(source='user.username')      # employee's username
+    manager_name = serializers.ReadOnlyField(source='manager.username')  # manager's username
 
     class Meta:
         model = Employee
         fields = [
-            'id', 'first_name', 'last_name', 'email',
-            'designation', 'department', 'date_of_joining',
-            'created_by'
+            'id',
+            'username',
+            'manager',
+            'manager_name',
+            'first_name',
+            'last_name',
+            'email',
+            'designation',
+            'department',
+            'date_of_joining'
         ]
 
-# New serializer for import history
+# Import History Serializer
 class EmployeeImportHistorySerializer(serializers.ModelSerializer):
     uploaded_by = serializers.ReadOnlyField(source='uploaded_by.username')
 

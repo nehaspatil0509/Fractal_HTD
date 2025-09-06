@@ -1,17 +1,25 @@
 from django.db import models
-from accounts.models import User   # user who creates employee
+from accounts.models import User
 
 class Employee(models.Model):
-    created_by = models.ForeignKey(
+    user = models.OneToOneField(
         User,
-        on_delete=models.CASCADE,
-        related_name="employees",
+        on_delete=models.SET_NULL,
         null=True,
-        blank=True
+        blank=True,
+        related_name='employee_profile'
     )
-    first_name = models.CharField(max_length=100, null=True)
-    last_name = models.CharField(max_length=100, null=True)
-    email = models.EmailField(unique=True, null=True, blank=True)
+    manager = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        limit_choices_to={'role': 'manager'},
+        related_name='team_members'
+    )
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+    email = models.EmailField(unique=True,null=False, blank=False)
     designation = models.CharField(max_length=100)
     department = models.CharField(max_length=100)
     date_of_joining = models.DateField()
@@ -20,7 +28,6 @@ class Employee(models.Model):
         return f"{self.first_name} {self.last_name} - {self.designation}"
 
 
-# New model to track CSV/Excel imports
 class EmployeeImportHistory(models.Model):
     uploaded_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     file_name = models.CharField(max_length=255)

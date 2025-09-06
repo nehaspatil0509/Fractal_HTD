@@ -6,30 +6,36 @@ import axios from 'axios';
 
 function DepartmentChart() {
   const [chartData, setChartData] = useState([]);
+  const [role, setRole] = useState("");
 
   useEffect(() => {
-    const token = localStorage.getItem("access"); // get JWT access token
+    const storedRole = localStorage.getItem("role");
+    setRole(storedRole);
 
-    axios
-      .get('http://127.0.0.1:8000/api/employees/', {
-        headers: {
-          Authorization: `Bearer ${token}`, // attach token
-        },
-      })
-      .then((res) => {
-        // Count employees per department
-        const deptCounts = {};
-        res.data.forEach((emp) => {
-          const dept = emp.department || "Unknown";
-          deptCounts[dept] = (deptCounts[dept] || 0) + 1;
-        });
+    if (storedRole === "manager" || storedRole === "admin") {
+      const token = localStorage.getItem("access");
 
-        // Convert to Highcharts format
-        const data = Object.entries(deptCounts).map(([name, y]) => ({ name, y }));
-        setChartData(data);
-      })
-      .catch((err) => console.error("Error fetching employees:", err.response ? err.response.data : err.message));
+      axios
+        .get('http://127.0.0.1:8000/api/employees/', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((res) => {
+          const deptCounts = {};
+          res.data.forEach((emp) => {
+            const dept = emp.department || "Unknown";
+            deptCounts[dept] = (deptCounts[dept] || 0) + 1;
+          });
+
+          const data = Object.entries(deptCounts).map(([name, y]) => ({ name, y }));
+          setChartData(data);
+        })
+        .catch((err) => console.error("Error fetching employees:", err.response ? err.response.data : err.message));
+    }
   }, []);
+
+  if (role === "employee") return null; // Employees can't see department chart
 
   const options = {
     chart: { type: 'pie' },

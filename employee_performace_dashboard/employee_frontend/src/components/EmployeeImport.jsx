@@ -1,10 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Form, Button, Alert } from "react-bootstrap";
 import axios from "axios";
 
 function EmployeeImport() {
   const [file, setFile] = useState(null);
   const [message, setMessage] = useState("");
+  const [role, setRole] = useState("");
+
+  useEffect(() => {
+    const storedRole = localStorage.getItem("role"); // assuming you store role in localStorage
+    setRole(storedRole);
+  }, []);
 
   const handleFileChange = (e) => setFile(e.target.files[0]);
 
@@ -26,6 +32,8 @@ function EmployeeImport() {
       setMessage("Failed to import employees.");
     }
   };
+
+  if (role !== "admin" && role !== "manager") return null; // hide for employees
 
   return (
     <div className="container my-4">
